@@ -1,3 +1,4 @@
+"use server"
 import React from 'react'
 import PaymentPage from '../components/PaymentPage'
 import { notFound } from "next/navigation"
@@ -7,7 +8,7 @@ import User from '@/models/User'
 
 
 
-const Username = async ({ params }) => {
+const Username = async({ params }) => {
 
   // If the username is not present in the database, show a 404 page
   const checkUser = async () => {
@@ -24,7 +25,7 @@ const Username = async ({ params }) => {
   return (
     <>
        
-      <PaymentPage username={(await params).username} />
+      <PaymentPage username={ params.username} />
     </>
   )
 }

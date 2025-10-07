@@ -46,6 +46,7 @@ const Dashboard = () => {
             theme: "light",
             transition: Bounce,
             });
+          
     }
 
 
