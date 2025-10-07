@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import Script from 'next/script'
 
 import { fetchuser, fetchpayments, initiate } from '@/action/useraction'
@@ -21,7 +21,7 @@ const PaymentPage = ({ username }) => {
 
     useEffect(() => {
         getData()
-    }, [])
+    }, [ getData()])
 
     useEffect(() => {
         if(searchParams.get("paymentdone") == "true"){
@@ -46,12 +46,12 @@ const PaymentPage = ({ username }) => {
         setPaymentform({ ...paymentform, [e.target.name]: e.target.value })
     }
 
-    const getData = async () => {
-        let u = await fetchuser(username)
-        setcurrentUser(u)
-        let dbpayments = await fetchpayments(username)
-        setPayments(dbpayments) 
-    }
+    const getData = useCallback(async () => {
+        let u = await fetchuser(username);
+        setcurrentUser(u);
+        let dbpayments = await fetchpayments(username);
+        setPayments(dbpayments);
+    }, [username]); // Add dependencies for variables used inside getData
 
 
     const pay = async (amount) => {
