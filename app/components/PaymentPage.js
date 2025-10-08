@@ -53,6 +53,7 @@ const PaymentPage = ({ username }) => {
       });
     }
     router.push(`/${username}`);
+    
   }, []);
 
   const handleChange = (e) => {

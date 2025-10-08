@@ -8,7 +8,8 @@ import User from '@/models/User'
 
 
 
-const Username = async({ params }) => {
+const Username = async props => {
+  const params = await props.params;
 
   // If the username is not present in the database, show a 404 page
   const checkUser = async() => {
@@ -19,9 +20,9 @@ const Username = async({ params }) => {
     }
    
   }
-   checkUser()
-  
-  
+  checkUser()
+
+
   return (
     <>
        
@@ -32,7 +33,8 @@ const Username = async({ params }) => {
 
 export default Username
  
-export async function generateMetadata({params}) {
+export async function generateMetadata(props) {
+  const params = await props.params;
   return {
     title: `Support ${params.username} - Get Me A Chai`,
   }
