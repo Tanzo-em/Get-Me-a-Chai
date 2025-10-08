@@ -18,10 +18,20 @@ const PaymentPage = ({ username }) => {
     const [payments, setPayments] = useState([])
     const searchParams = useSearchParams()
     const router = useRouter()
-
+    
+    const getData = useCallback(async () => {
+        let u = await fetchuser(username);
+        setcurrentUser(u);
+        let dbpayments = await fetchpayments(username);
+        setPayments(dbpayments);
+    }, [username]);
+    
+    
+    
+    // Add dependencies for variables used inside getData
     useEffect(() => {
         getData()
-    }, [ getData()])
+    }, [getData]);
 
     useEffect(() => {
         if(searchParams.get("paymentdone") == "true"){
@@ -46,12 +56,6 @@ const PaymentPage = ({ username }) => {
         setPaymentform({ ...paymentform, [e.target.name]: e.target.value })
     }
 
-    const getData = useCallback(async () => {
-        let u = await fetchuser(username);
-        setcurrentUser(u);
-        let dbpayments = await fetchpayments(username);
-        setPayments(dbpayments);
-    }, [username]); // Add dependencies for variables used inside getData
 
 
     const pay = async (amount) => {
