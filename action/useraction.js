@@ -33,15 +33,20 @@ export const initiate = async (amount, to_username, paymentform) => {
 
 export const fetchuser = async (username) => {
     await connectDb()
-    let u = await User.findOne({ username: username })
-    let user = u.toObject({ flattenObjectIds: true })
-    return user
+    let u = await User.findOne({ username: username }).lean() // Use .lean()
+   if (u && u._id) {
+        u._id = u._id.toString(); // Convert _id to string
+    }
+    return u
 }
 
 export const fetchpayments = async (username) => {
     await connectDb()
     // find all payments sorted by decreasing order of amount and flatten object ids
     let p = await Payment.find({ to_user: username, done:true }).sort({ amount: -1 }).limit(10).lean()
+    p.forEach(payment => {
+        payment._id = payment._id.toString();
+    });
     return p
 }
 
